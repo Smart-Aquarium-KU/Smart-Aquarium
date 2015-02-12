@@ -9,3 +9,6 @@ Features
 5-Able to allert user in emergency situations                                                                            
 6-Daily reports with demographics                                                                            
 
+System Overview
+
+![Settings Window](https://raw.githubusercontent.com/metemertkan/Smart-Aquarium/master/System%20Overview.png)
