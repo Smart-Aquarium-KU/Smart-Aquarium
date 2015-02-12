@@ -6,7 +6,7 @@ Features
 2-Platform independency(IOS,Android,PC)                                                                            
 3-Video streaming for live monitoring                                                                            
 4-Water temperature monitoring                                                                            
-5-Able to allert user in emergency situations                                                                            
+5-Able to alert user in emergency situations                                                                            
 6-Daily reports with demographics                                                                            
 
 System Overview
