@@ -1,5 +1,5 @@
 # Smart-Aquarium
-Be smarter than your fish trust the Smart Aquarium                                                    
+Be smarter than your fish trust the Smart Aquarium.                                                    
 You dont need to worry about pet fish, Smart Aquarium will do this for you.All you need to do is enjoying them.
 
 Features                                                                                          
