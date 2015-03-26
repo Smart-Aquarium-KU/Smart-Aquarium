@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class loginPage
+ * Servlet implementation class registerPage
  */
-@WebServlet("/loginPage")
-public class loginPage extends HttpServlet {
+@WebServlet("/registerPage")
+public class registerPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public loginPage() {
+    public registerPage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,25 +39,25 @@ public class loginPage extends HttpServlet {
 		response.setContentType("text/html");  
 	    PrintWriter out = response.getWriter();  
 	    
-	    //Get the username and password from loginPage.jsp
+	    
 	    String n=request.getParameter("username");  
-	    String p=request.getParameter("userpass");  
-	    //database object
-	    MySQLAccess accessControl= new MySQLAccess();
+	    String p=request.getParameter("userpass");
+	    String rp=request.getParameter("ruserpass");
+	    String e=request.getParameter("email");
+	    int g=Integer.parseInt(request.getParameter("gender"));
+	    
+	    //Control mechanism for the user input 
+	    
+	    //After controlling we can put data into user object
+	    User newUser=new User();
+	    newUser.setUsername(n);
+	    newUser.setUserpass(p);
+	    newUser.setEmail(e);
+	    newUser.setGender(g);
+	    
+	    //write the user information to database
 	    
 	    
-	    if(accessControl.valideUser(n, p))
-	    {
-	    	RequestDispatcher rd=request.getRequestDispatcher("mainPage.jsp");  
-	         rd.forward(request,response);  
-	    }
-	    else
-	    {
-	    	out.print("Sorry username or password incorrect");  
-	        RequestDispatcher rd=request.getRequestDispatcher("loginPage.jsp");  
-	        rd.include(request,response);  
-	    }
-		
 	}
 
 }

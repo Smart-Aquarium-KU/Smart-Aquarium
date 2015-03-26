@@ -9,10 +9,11 @@ public class MySQLAccess {
 	static final String USER = "root";
 	static final String PASS = "mete123";
 
+	//
 	public boolean valideUser(String username,String password)
 	{
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt;
 		int id=0;
 		try {
 
@@ -23,11 +24,13 @@ public class MySQLAccess {
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			//STEP 4: Execute a query
 			System.out.println("Creating statement...");
-			stmt = conn.createStatement();
-			String sql;
-			sql = "SELECT id, username, password FROM user WHERE username='"+username+"'"+" and "+"password='"+password+"'";
-			//System.out.println(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "SELECT id, username, password FROM user WHERE username= ? and password= ?";
+			//Prepared Statement for defending the sql injection
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1,username);
+			pstmt.setString(2,password);
+			
+			ResultSet rs = pstmt.executeQuery();
 			//STEP 5: Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
@@ -35,8 +38,9 @@ public class MySQLAccess {
 				//Display values
 				System.out.println("ID: " + id+", Username: " + username);
 			}
+			//STEP 6: Clean-up environment
 			rs.close();
-			stmt.close();
+			pstmt.close();
 			conn.close();
 
 			if(id!=0)
@@ -48,8 +52,7 @@ public class MySQLAccess {
 				System.out.println("User Could not found with username:"+username);
 				return false;
 			}
-			//STEP 6: Clean-up environment
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
