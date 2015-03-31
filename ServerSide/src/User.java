@@ -5,7 +5,12 @@ public class User {
 	private String userpass;
 	private String email;
 	private int gender; //0 means female 1 means male
+	private String fish;
 	
+	public User(String _username,String _userpass){
+		username=_username;
+		userpass=_userpass;
+	}
 	//Getters and setters
 	public String getUsername() {
 		return username;
@@ -30,6 +35,12 @@ public class User {
 	}
 	public void setGender(int gender) {
 		this.gender = gender;
+	}
+	public String getFish() {
+		return fish;
+	}
+	public void setFish(String fish) {
+		this.fish = fish;
 	}
 	
 	

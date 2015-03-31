@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 public class loginPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//User types
-	private static int USER = 1;
-	private static int ADMIN = 2;
-	private static int GUESS = 3;
+	private static int NORMALUSER = 1;
+	private static int ADMINUSER = 2;
+	private static int GUESSUSER = 3;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -48,7 +48,6 @@ public class loginPage extends HttpServlet {
 
 		//validation control integer if its 0-Success 1-failure -1-missing_info
 		int validationString;
-		int validationNumber;
 		boolean allOk=true;
 
 		response.setContentType("text/html");  
@@ -63,35 +62,39 @@ public class loginPage extends HttpServlet {
 
 		//Server side validations
 		Validations validationControl= new Validations();
+		
+		
 
 		//if user input is not valid warn the user
-		validationString=validationControl.checkForString(n);
-		validationNumber=validationControl.checkForNumber(n);
+		validationString=validationControl.verifyString(n);
 		//Check for username
-		if(validationString!=0 || validationNumber!=0){
-			//not-valid
+		if(validationString!=0) //not valid
 			allOk=false;
-		}
 		
 
-		validationString=validationControl.checkForString(p);
-		validationNumber=validationControl.checkForNumber(p);
-
+		validationString=validationControl.verifyString(p);
 		//check for password
-		if(validationString!=0 || validationNumber!=0){
-			//not-valid
+		if(validationString!=0)//not-valid
 			allOk=false;
-		}
 		
 		if(allOk){
+			
+			//User object
+			User newUser = new User(n,p);
 
-			if(accessControl.valideUser(n, p))
-			{
-				RequestDispatcher rd=request.getRequestDispatcher("mainPage.jsp");  
+			if(NORMALUSER==accessControl.valideUser(newUser)){
+				RequestDispatcher rd=request.getRequestDispatcher("userPanel.jsp");  
 				rd.forward(request,response);  
 			}
-			else
-			{
+			else if(ADMINUSER==accessControl.valideUser(newUser)){
+				RequestDispatcher rd=request.getRequestDispatcher("adminPanel.jsp");  
+				rd.forward(request,response);  
+			}
+			else if(GUESSUSER==accessControl.valideUser(newUser)){
+				RequestDispatcher rd=request.getRequestDispatcher("guessPanel.jsp");  
+				rd.forward(request,response);  
+			}
+			else{
 				out.print(message.getString("incorrectUorP"));  
 				RequestDispatcher rd=request.getRequestDispatcher("loginPage.jsp");  
 				rd.include(request,response);  

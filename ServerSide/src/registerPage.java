@@ -49,11 +49,7 @@ public class registerPage extends HttpServlet {
 	    //Control mechanism for the user input 
 	    
 	    //After controlling we can put data into user object
-	    User newUser=new User();
-	    newUser.setUsername(n);
-	    newUser.setUserpass(p);
-	    newUser.setEmail(e);
-	    newUser.setGender(g);
+
 	    
 	    //write the user information to database
 	    
