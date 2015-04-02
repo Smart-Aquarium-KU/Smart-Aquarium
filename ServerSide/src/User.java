@@ -1,8 +1,10 @@
 
 public class User {
 
+	private int id;
 	private String username;
 	private String userpass;
+	private String salt;
 	private String email;
 	private int gender; //0 means female 1 means male
 	private String fish;
@@ -10,6 +12,9 @@ public class User {
 	public User(String _username,String _userpass){
 		username=_username;
 		userpass=_userpass;
+	}
+	public User(String _username){
+		username=_username;
 	}
 	//Getters and setters
 	public String getUsername() {
@@ -41,6 +46,18 @@ public class User {
 	}
 	public void setFish(String fish) {
 		this.fish = fish;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

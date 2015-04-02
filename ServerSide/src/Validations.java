@@ -1,4 +1,3 @@
-import java.util.regex.*;
 public class Validations {
 
 	private static int SUCCESS = 0;
@@ -12,8 +11,9 @@ public class Validations {
 
 	    if(testField == null || testField.equals(""))
 	        return MISSING_INFO;
-
-	    if(!testField.matches("[a-zA-Z]*"))
+	    	
+	    //this means that it can start with character and continue with number or otherwise or just characters
+	    if(!testField.matches("(([a-zA-Z].*[0-9])|([0-9].*[a-zA-Z])|([a-zA-Z]*))"))
 	        return FAILURE;
 
 	    return SUCCESS;

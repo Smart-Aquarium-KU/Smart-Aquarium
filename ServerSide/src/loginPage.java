@@ -2,6 +2,10 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,6 +26,7 @@ public class loginPage extends HttpServlet {
 	private static int NORMALUSER = 1;
 	private static int ADMINUSER = 2;
 	private static int GUESSUSER = 3;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -54,51 +59,70 @@ public class loginPage extends HttpServlet {
 		PrintWriter out = response.getWriter();  
 
 		//Get the username and password from loginPage.jsp
-		String n=request.getParameter("username");  
-		String p=request.getParameter("userpass");
+		String username=request.getParameter("username");  
+		String password=request.getParameter("userpass");
+
 
 		//database object
 		MySQLAccess accessControl= new MySQLAccess();
 
 		//Server side validations
 		Validations validationControl= new Validations();
-		
-		
+
+
 
 		//if user input is not valid warn the user
-		validationString=validationControl.verifyString(n);
+		validationString=validationControl.verifyString(username);
 		//Check for username
 		if(validationString!=0) //not valid
 			allOk=false;
-		
 
-		validationString=validationControl.verifyString(p);
+
+		validationString=validationControl.verifyString(password);
 		//check for password
 		if(validationString!=0)//not-valid
 			allOk=false;
-		
-		if(allOk){
-			
-			//User object
-			User newUser = new User(n,p);
 
-			if(NORMALUSER==accessControl.valideUser(newUser)){
-				RequestDispatcher rd=request.getRequestDispatcher("userPanel.jsp");  
-				rd.forward(request,response);  
-			}
-			else if(ADMINUSER==accessControl.valideUser(newUser)){
-				RequestDispatcher rd=request.getRequestDispatcher("adminPanel.jsp");  
-				rd.forward(request,response);  
-			}
-			else if(GUESSUSER==accessControl.valideUser(newUser)){
-				RequestDispatcher rd=request.getRequestDispatcher("guessPanel.jsp");  
-				rd.forward(request,response);  
-			}
-			else{
-				out.print(message.getString("incorrectUorP"));  
-				RequestDispatcher rd=request.getRequestDispatcher("loginPage.jsp");  
-				rd.include(request,response);  
-			}
+		if(allOk){
+
+			Connection con=null;
+			con=accessControl.connect(con);
+
+			try {			
+
+				try {
+					if(accessControl.authenticate(con, username, password)){
+						int[] idRoleid=accessControl.readIdWithRole(con, username);
+
+						//re-direct other page with userid
+						if(NORMALUSER==idRoleid[1]){
+							RequestDispatcher rd=request.getRequestDispatcher("userPanel.jsp");  
+							rd.forward(request,response);  
+						}
+						else if(ADMINUSER==idRoleid[1]){
+							RequestDispatcher rd=request.getRequestDispatcher("adminPanel.jsp");  
+							rd.forward(request,response);  
+						}
+						else if(GUESSUSER==idRoleid[1]){
+							RequestDispatcher rd=request.getRequestDispatcher("guessPanel.jsp");  
+							rd.forward(request,response);  
+						}
+
+					}else{
+						out.print(message.getString("incorrectUorP"));  
+						RequestDispatcher rd=request.getRequestDispatcher("loginPage.jsp");  
+						rd.include(request,response);  
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
 		}
 		else
 		{
