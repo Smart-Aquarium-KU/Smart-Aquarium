@@ -3,10 +3,9 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Locale;
+
 import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class loginPage
  */
@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 public class loginPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//User types
-	private static int NORMALUSER = 1;
-	private static int ADMINUSER = 2;
-	private static int GUESSUSER = 3;
+	private static final int NORMALUSER = 1;
+	private static final int ADMINUSER = 2;
+	private static final int GUESSUSER = 3;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -83,18 +83,24 @@ public class loginPage extends HttpServlet {
 		if(validationString!=0)//not-valid
 			allOk=false;
 
+
 		if(allOk){
 
 			Connection con=null;
 			con=accessControl.connect(con);
 
-			try {			
+					
 
 				try {
 					if(accessControl.authenticate(con, username, password)){
 						int[] idRoleid=accessControl.readIdWithRole(con, username);
-
-						//re-direct other page with userid
+						User user=accessControl.readUsersInfo(con, username);
+						user.setId(idRoleid[0]);
+						user.setRoleId(idRoleid[1]);
+						
+						SendCommand commandExecuter= new SendCommand();
+						commandExecuter.encryptAndSend(user, 2);
+						//re-direct other page with user object
 						if(NORMALUSER==idRoleid[1]){
 							RequestDispatcher rd=request.getRequestDispatcher("userPanel.jsp");  
 							rd.forward(request,response);  
@@ -116,9 +122,12 @@ public class loginPage extends HttpServlet {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				
 
 			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 

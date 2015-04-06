@@ -8,6 +8,7 @@ public class User {
 	private String email;
 	private int gender; //0 means female 1 means male
 	private String fish;
+	private int roleId;
 	
 	public User(String _username,String _userpass){
 		username=_username;
@@ -58,6 +59,12 @@ public class User {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	
 	

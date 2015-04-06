@@ -12,7 +12,7 @@ import sun.misc.BASE64Encoder;
 
 public class MySQLAccess {
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private static final String DB_URL = "jdbc:mysql://localhost/SmartAquarium";
+	private static final String DB_URL = "jdbc:mysql://localhost/test";
 
 	//  Database credentials
 	private static final String USER = "root";
@@ -90,7 +90,7 @@ public class MySQLAccess {
 		
 			try {
 				//read the last entered user id
-				ps = con.prepareStatement("select max(id) as last_id from user");
+				ps = con.prepareStatement("select max(user_id) as last_id from users");
 				rs = ps.executeQuery();
 				int lastId=0;
 					if (rs.next()) {
@@ -102,9 +102,9 @@ public class MySQLAccess {
 						System.out.println("Last id readed as 0");
 					else{
 						//make that user guess
-						ps = con.prepareStatement("INSERT INTO user_role(userid,roleid) VALUES (?,?)");
-						ps.setInt(1, lastId);
-						ps.setInt(2, GUESSUSER);
+						ps = con.prepareStatement("INSERT INTO role_user(role_id,user_id) VALUES (?,?)");
+						ps.setInt(1,GUESSUSER);
+						ps.setInt(2, lastId);
 						ps.executeUpdate();
 						
 					}
@@ -114,6 +114,9 @@ public class MySQLAccess {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally{
+				close(rs);
+				close(ps);
 			}
 			
 			
@@ -132,7 +135,7 @@ public class MySQLAccess {
 				String sDigest = byteToBase64(bDigest);
 				String sSalt = byteToBase64(bSalt);
 
-				ps = con.prepareStatement("INSERT INTO user(username, password,email,gender,salt) VALUES (?,?,?,?,?)");
+				ps = con.prepareStatement("INSERT INTO users(username,password,email,gender,salt) VALUES (?,?,?,?,?)");
 				ps.setString(1,user.getUsername());
 				ps.setString(2,sDigest);
 				ps.setString(3,user.getEmail());
@@ -162,16 +165,16 @@ public int[] readIdWithRole(Connection con,String username){
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	try {
-		ps = con.prepareStatement("SELECT id,roleid FROM user u join user_role ur on u.id=ur.userid WHERE username = ?");
+		ps = con.prepareStatement("SELECT u.user_id,ru.role_id FROM users u join role_user ru on u.user_id=ru.user_id WHERE username = ?");
 		ps.setString(1, username);
 		rs = ps.executeQuery();
 		int id=0, roleid=0;
 		if (rs.next()) {
-			id = rs.getInt("id");
-			roleid = rs.getInt("roleid");
+			id = rs.getInt("user_id");
+			roleid = rs.getInt("role_id");
 			// DATABASE VALIDATION
 			if (id == 0 || roleid == 0) {
-				throw new SQLException("Database inconsistant Salt or Digested Password altered");
+				throw new SQLException("Database inconsistant id or roleid altered");
 			}
 			if (rs.next()) { // Should not append, because login is the primary key
 				throw new SQLException("Database inconsistent two CREDENTIALS with the same LOGIN");
@@ -201,7 +204,7 @@ public int[] readIdWithRole(Connection con,String username){
 		try {
 			boolean userExist = true;
 
-			ps = con.prepareStatement("SELECT password, salt FROM user WHERE username = ?");
+			ps = con.prepareStatement("SELECT password, salt FROM users WHERE username = ?");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			String digest, salt;
@@ -236,6 +239,46 @@ public int[] readIdWithRole(Connection con,String username){
 			close(rs);
 			close(ps);
 		}
+	}
+	public User readUsersInfo(Connection con, String username) throws SQLException,IOException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User user=new User(username);
+			ps = con.prepareStatement("SELECT password,email,gender,salt FROM users WHERE username = ?");
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			int gender;
+			String password, email,salt;
+			if (rs.next()) {
+				password = rs.getString("password");
+				email = rs.getString("email");
+				gender=rs.getInt("gender");
+				salt = rs.getString("salt");
+				
+				// DATABASE VALIDATION
+				if (password == null || salt == null) {
+					throw new SQLException("Database inconsistant Salt or Digested Password altered");
+				}
+				if (rs.next()) { // Should not append, because login is the primary key
+					throw new SQLException("Database inconsistent two CREDENTIALS with the same LOGIN");
+				}
+				//if everything is okay
+				user.setUserpass(password);
+				user.setEmail(email);
+				user.setGender(gender);
+				user.setSalt(salt);
+				
+			} else { // TIME RESISTANT ATTACK (Even if the user does not exist the
+				// Computation time is equal to the time needed for a legitimate user
+			
+			}
+
+			close(rs);
+			close(ps);
+			
+			return user;
+
+
 	}
 
 }
