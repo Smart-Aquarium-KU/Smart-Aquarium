@@ -41,7 +41,7 @@ function validateForm() {
     }
     //Check for regex
     if(!ck_name.test(username)){
-        alert(globals['en'].usernameRegex);
+        alert(globals['en'].usernameRestriction);
         return false;
     }
     
@@ -55,11 +55,7 @@ function validateForm() {
     	alert(globals['en'].passwordRestriction);
         return false;
     }
-    //Check for regex
-    if(!ck_name.test(userpass)){
-        alert(globals['en'].passwordRegex);
-        return false;
-    }
+    
 }
 </script>
 <br><br><br><br>
