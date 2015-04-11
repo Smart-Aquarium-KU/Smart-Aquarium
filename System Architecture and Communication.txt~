@@ -1,0 +1,50 @@
+Functions:
+
+Raspberry Pi Side                                               |Server Side
+----------------------------------------------------------------|-----------------------------------------------------------------
+initializeAquarium.py:						|CommandSender.java:
+After registration and adding aquarium to user raspberry pi sho-|It is class for encrypting string "userid,hash_name,command" and 
+uld run this script for specifying the and creating connection  |sending to the spesific pi with ip address on port 1235.
+with user.							|
+It has function called writeUserAndAquariumInfo(username,mac)	|								
+writeUserAndAquariumInfo					|TemperatureListener.java
+	def:Use username and mac address of pi for asking remote|Multithread mechanism for listening incoming bytes on port 1234.
+database and write these information to file called aquarium.txt|Every 60 seconds it writes the updated temperatures to database.
+"userId,aquariumId,hash_name"					|								
+								|
+TemperatureSender.py:						|WebServer:
+Client program that sends temperature in format of 		|After user successfully logedin read temperature for every 60 seconds
+"aquariumId,hash_name,temperature".				|and show it to user on web.
+But it will be encrypted with using hash_name as a salt.	|Create object on html for video and give aquariums ip to it
+For making it easy for server(And we dont have that much of time|As an example 'http://158.108.34.18:8081'
+for another good approach) this script will add hash_name in the|
+ middle of encrypted text.					|
+Like:								|
+'GfdVTVHeQa8Y7fZ72IPnbKM=' this is example of encrypted command |
+of '11,comar,23'. 						|
+*'11' is aquarium id   						|
+*'bencomar' is hash_name					|
+*'23' is temperature							|
+Lets add the hash_name in the middle of the string.		|
+'GfdVTVHeQa8Ybencomar7fZ72IPnbKM='				|
+hash_name must be 8 characters all the time and encrypted string|
+will contain 32 characters.It will be sended on port 1234	|
+								|
+ListenCommands.py:						|
+Server program that listens port 1235 for incoming bytes.Use	|
+decyrption function for understand the command.It will be form	|
+of 'userId,hash_name,commandId'.				|
+Verify the user with txt file called aquarium.txt if user has	|
+right to do it commit the command				|
+								|
+VideoStreaming:							|
+This is the service called motion.It can easly loaded from	|
+internet with "sudo apt-get install motion" after little conf	|
+settings "sudo service motion start" command will start the 	|
+service of streaming.And it can be reached from port 8081.	|
+								|
+Commands:							|
+1->Feed								|
+2->Lights On							|
+3->Lights Off							|
+	

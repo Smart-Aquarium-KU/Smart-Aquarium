@@ -1,10 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Smart Aquarium</title>
+<script>
+var theScreenWidth = screen.width
+var theScreenHeight = screen.height
+if ( !((theScreenWidth > 480) && (theScreenHeight > 240)) ) {
+	window.document.location = "/Smart_Aquarium/m.mainPage.html"
+}
+</script>
 </head>
 <body>
 
@@ -22,9 +27,7 @@
 <tr><td> </td></tr> 
 <tr><td align="center"> Smart Aquarium </td></tr> 
 <tr><td> </td></tr> 
-<tr><td align="center"> Be smarter than your fish trust the Smart Aquarium.<br>You don't need to worry about pet fish, Smart Aquarium will do this for you. <br/> All you need to do is enjoying them.
- </td></tr> 
-</td></tr> 
+<tr><td align="center"> Be smarter than your fish trust the Smart Aquarium.<br>You don't need to worry about pet fish, Smart Aquarium will do this for you. <br/> All you need to do is enjoying them.</td></tr> 
 </table>
 
 
@@ -56,6 +59,7 @@ setInterval(GetClock,1000);
 }
 </script>
 <div id="clockbox"></div>
+<div data-role="footer" data-theme="d"><h5>Kasetsart University Senior Project </h5></div> 
 
 </body>
 </html>

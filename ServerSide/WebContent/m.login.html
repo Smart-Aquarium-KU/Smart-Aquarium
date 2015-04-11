@@ -1,9 +1,14 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Smart Aquarium</title>
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Smart Aquarium</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 <script>
 //localization strings for the user message find a better way to do it
 var globals ={
@@ -21,11 +26,10 @@ function validateForm() {
 	//get the username and password
     var username = document.forms["loginForm"]["username"].value;
     var userpass = document.forms["loginForm"]["userpass"].value;
-    
+
     //regex strings for validation
     var ck_name=/^[A-Za-z0-9 ]{3,30}$/;
-    
-    
+
     //check username if empty
     if (username == null || username == "") {
         alert(globals['en'].usernameMissing);
@@ -41,6 +45,7 @@ function validateForm() {
         return false;
     }
     
+
     //check password if empty 
     if (userpass == null || userpass == "") {
         alert(globals['en'].passwordMissing);
@@ -50,23 +55,46 @@ function validateForm() {
     	alert(globals['en'].passwordRestriction);
         return false;
     }
-    
     //Check for regex
     if(!ck_name.test(userpass)){
         alert(globals['en'].passwordRegex);
         return false;
     }
-    
 }
 </script>
+<br><br><br><br>
 </head>
 <body>
-<form name="loginForm" action="loginPage"  onsubmit="return validateForm()" method="post">  
-Name:<input type="text" name="username"/><br/><br/>  
-Password:<input type="password" name="userpass"/><br/><br/>  
-<input type="submit" value="login"/>  
-</form>
-<div data-role="footer" data-theme="d"><h5>Kasetsart University Senior Project </h5></div> 
+
+
+<br><br><br><br>
+<div id="loginPage" data-role="page" data-theme="a">
+<div data-role="header">
+<h2>Smart Aquarium</h2>
+</div>
+
+<div data-role="content" data-theme="b">   
+    <div id="landmark-1" data-landmark-id="1">
+    <form name="loginForm" action="loginPage"  onsubmit="return validateForm()" method="post"> 
+	
+	
+    <div data-role="fieldcontain" class="ui-hide-label">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" value="" placeholder="Username" />
+    </div>
+
+    <div data-role="fieldcontain" class="ui-hide-label">
+        <label for="password">Password:</label>
+        <input type="password" name="userpass" id="password" value="" placeholder="Password" />
+    </div>
+	
+	<input type="submit" value="Login"/> 
+    </form>
+</div>  
+</div>
+
+
+<div data-role="footer" data-theme="d"><h1>Kasetsart University Senior Project </h1></div> 
 
 </body>
 </html>
