@@ -20,11 +20,12 @@ For making it easy for server(And we dont have that much of time|As an example '
 for another good approach) this script will add hash_name in the|
  middle of encrypted text.					|
 Like:								|
-'GfdVTVHeQa8Y7fZ72IPnbKM=' this is example of encrypted command |
-of '11,comar,2'. 						|
+'GfdVTVHeQa8Y7fZ72IPnbKM=' this is example of encrypted         |
+temperature  							|
+of '11,comar,23'. 						|
 *'11' is aquarium id   						|
 *'bencomar' is hash_name					|
-*'2' is command							|
+*'23' is temperature						|
 Lets add the hash_name in the middle of the string.		|
 'GfdVTVHeQa8Ybencomar7fZ72IPnbKM='				|
 hash_name must be 8 characters all the time and encrypted string|
