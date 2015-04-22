@@ -9,7 +9,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Date;
-import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,7 +19,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
 
 
 
@@ -118,7 +116,8 @@ public class CallableFutures {
 			Cipher cipher = Cipher.getInstance("DES/CFB8/NoPadding");
 			cipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 			//get the base64 decoding
-			byte[] decordedValue = new Base64().decodeBase64(encriptedString.toString());
+			
+			byte[] decordedValue = org.apache.commons.codec.binary.Base64.decodeBase64(encriptedString.toString());
 			byte[] decValue=cipher.doFinal(decordedValue);
 			//convert and return
 			String decyriptedString=new String(decValue,"ISO-8859-1");

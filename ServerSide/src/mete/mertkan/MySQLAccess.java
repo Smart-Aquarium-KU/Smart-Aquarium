@@ -324,17 +324,14 @@ public class MySQLAccess {
 		rs = ps.executeQuery();
 
 		List<Integer> aquariums = new ArrayList<Integer>();
-		if (rs.next()) {
+		while (rs.next()) {
 			aquariums.add(rs.getInt("aquarium_id"));
 			// DATABASE VALIDATION
 			if (aquariums.isEmpty()) {
 				throw new SQLException("Database inconsistant Salt or Digested Password altered");
 			}
 
-		} else { // TIME RESISTANT ATTACK (Even if the user does not exist the
-			// Computation time is equal to the time needed for a legitimate user
-
-		}
+		} 
 
 		close(rs);
 		close(ps);
@@ -409,6 +406,72 @@ public class MySQLAccess {
 		
 		close(ps);
 	}
+	
+	public void insertHashWord(Connection con,String hash_word,int id) throws SQLException{
+		PreparedStatement ps = null;
 
+
+		ps = con.prepareStatement("UPDATE users SET hash_word=? WHERE user_id=?");
+		ps.setString(1,hash_word);
+		ps.setInt(2,id);
+		ps.executeUpdate();
+
+		//update the user guest to normal
+		
+		close(ps);
+	}
+	public int[] getAquariumsOfUser(Connection con, int id) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ps = con.prepareStatement("SELECT aquarium_id FROM aquariums WHERE owner_id = ?");
+		ps.setInt(1, id);
+		rs = ps.executeQuery();
+
+		List<Integer> aquariums = new ArrayList<Integer>();
+		while (rs.next()) {
+			aquariums.add(rs.getInt("aquarium_id"));
+			// DATABASE VALIDATION
+			if (aquariums.isEmpty()) {
+				throw new SQLException("Database inconsistant Salt or Digested Password altered");
+			}
+
+		} 
+		close(rs);
+		close(ps);
+
+		return toIntArray(aquariums);
+	}
+	public int getAquariumsLastTemp(Connection con,int id) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ps = con.prepareStatement("SELECT degree from log_temperature where log_id=(select max(log_id) from log_temperature where aquarium_id=?)");
+		ps.setInt(1, id);
+		rs = ps.executeQuery();
+
+		int degree=0;
+		if (rs.next()) {
+			degree=rs.getInt("degree");
+			// DATABASE VALIDATION
+			if (degree==0) {
+				throw new SQLException("Database inconsistant Salt or Digested Password altered");
+			}
+
+		} 
+		close(rs);
+		close(ps);
+
+		return degree;
+	}
+	public void givePermission(Connection con,int userId,int aquariumId) throws SQLException{
+		PreparedStatement ps = null;
+
+
+		ps = con.prepareStatement("INSERT INTO access(user_id,aquarium_id) VALUES(?,?)");
+		ps.setInt(1,userId);
+		ps.setInt(2,aquariumId);
+		ps.executeUpdate();
+
+		close(ps);
+	}
 
 }

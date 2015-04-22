@@ -104,7 +104,9 @@ public class loginPage extends HttpServlet {
 						String hash_name=accessControl.readHash_word(con, username);
 						user.setHash_name(hash_name);
 						request.setAttribute("user", user);
-						request.getRequestDispatcher("/userPanel").forward(request,response);
+						request.getSession().setAttribute("user", user);
+						RequestDispatcher rd=request.getRequestDispatcher("/userPanel");
+						rd.forward(request,response);
 
 					}
 					else if(ADMINUSER==idRoleid[1]){

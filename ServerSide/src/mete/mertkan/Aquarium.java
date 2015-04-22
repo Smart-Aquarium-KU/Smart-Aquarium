@@ -6,6 +6,8 @@ public class Aquarium {
 	private String  mac_address;
 	private String  ip_address;
 	private int owner_id;
+	private int temperature;
+	
 	
 	public Aquarium(int aquarium_id,String aquarium_name,String  mac_address,String  ip_address,int owner_id){
 		this.aquarium_id=aquarium_id;
@@ -13,6 +15,14 @@ public class Aquarium {
 		this.mac_address=mac_address;
 		this.ip_address=ip_address;
 		this.owner_id=owner_id;
+	}
+	public Aquarium(Aquarium aquarium){
+		this.aquarium_id=aquarium.getAquarium_id();
+		this.aquarium_name=aquarium.getAquarium_name();
+		this.mac_address=aquarium.getMac_address();
+		this.ip_address=aquarium.getIp_address();
+		this.owner_id=aquarium.getOwner_id();
+		this.temperature=aquarium.getTemperature();
 	}
 	public Aquarium(int aquarium_id){
 		this.aquarium_id=aquarium_id;
@@ -53,6 +63,12 @@ public class Aquarium {
 	}
 	public void setOwner_id(int owner_id) {
 		this.owner_id = owner_id;
+	}
+	public int getTemperature() {
+		return temperature;
+	}
+	public void setTemperature(int temperature) {
+		this.temperature = temperature;
 	}
 	
 	

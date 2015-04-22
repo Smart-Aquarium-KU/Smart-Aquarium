@@ -1,11 +1,14 @@
 package mete.mertkan;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class askFish
+ * Servlet implementation class lights
  */
-@WebServlet("/askFish")
-public class askFish extends HttpServlet {
+@WebServlet("/lights")
+public class lights extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public askFish() {
+    public lights() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,28 +42,23 @@ public class askFish extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 
+		
+		MySQLAccess accessControl= new MySQLAccess();
+		Connection con=null;
+		con=accessControl.connect(con);
+		
 		User user=new User((User)request.getSession().getAttribute("user"));
-		String aquariumName=request.getParameter("aquariumName");
-		String macAddress=request.getParameter("macAddress");
-		String ipAddress=request.getParameter("ipAddress");
+		Aquarium aquarium=new Aquarium((Aquarium)request.getSession().getAttribute("aquarium"));
 		
-		Aquarium aquarium = new Aquarium(aquariumName, macAddress, ipAddress, user.getId());
-		
-		
+		SendCommand commandSender= new SendCommand();
 		try {
-			MySQLAccess accessControl= new MySQLAccess();
-			Connection con=null;
-			con=accessControl.connect(con);
-			accessControl.createAquarium(con, aquarium);
-			accessControl.insertHashWord(con, aquarium.getAquarium_name(), user.getId());
-		} catch (SQLException e) {
+			commandSender.encryptAndSend(user, 1, aquarium);
+		} catch (InvalidKeyException | NoSuchAlgorithmException
+				| NoSuchPaddingException | InvalidAlgorithmParameterException
+				| IllegalBlockSizeException | BadPaddingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/loginPage.jsp");
-		rd.forward(request,response);
 		
 	}
 

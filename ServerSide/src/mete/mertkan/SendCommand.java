@@ -27,7 +27,7 @@ public class SendCommand {
 
 
 
-	public void encryptAndSend(User user,int command) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnknownHostException, IOException {
+	public void encryptAndSend(User user,int command,Aquarium aquarium) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnknownHostException, IOException {
 		//First 8 characters of salt
 		String hash_word=user.getHash_name();	
 
@@ -43,7 +43,7 @@ public class SendCommand {
 		commandString.append(user.getId());
 		commandString.append(',');
 		//This will be the name of the fish
-		commandString.append(user.getSalt());
+		commandString.append(user.getHash_name());
 		commandString.append(',');
 		commandString.append(command);
 
@@ -51,7 +51,7 @@ public class SendCommand {
 
 		String encryptedString= new String(Base64.encodeBase64(binaryData), "ISO-8859-1");
 
-		Socket socket = new Socket("localhost", 1235);
+		Socket socket = new Socket(aquarium.getIp_address(), 1234);
 		DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
 
 		dOut.writeUTF(encryptedString);

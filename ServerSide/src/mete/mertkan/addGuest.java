@@ -1,11 +1,9 @@
 package mete.mertkan;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class askFish
+ * Servlet implementation class addGuest
  */
-@WebServlet("/askFish")
-public class askFish extends HttpServlet {
+@WebServlet("/addGuest")
+public class addGuest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public askFish() {
+    public addGuest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,29 +37,21 @@ public class askFish extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 
-		User user=new User((User)request.getSession().getAttribute("user"));
-		String aquariumName=request.getParameter("aquariumName");
-		String macAddress=request.getParameter("macAddress");
-		String ipAddress=request.getParameter("ipAddress");
+		Aquarium aquarium=new Aquarium((Aquarium)request.getSession().getAttribute("aquarium"));
 		
-		Aquarium aquarium = new Aquarium(aquariumName, macAddress, ipAddress, user.getId());
+		int guestId=Integer.parseInt(request.getParameter("guestid"));  
 		
+		MySQLAccess accessControl= new MySQLAccess();
+		Connection con=null;
+		con=accessControl.connect(con);
 		
 		try {
-			MySQLAccess accessControl= new MySQLAccess();
-			Connection con=null;
-			con=accessControl.connect(con);
-			accessControl.createAquarium(con, aquarium);
-			accessControl.insertHashWord(con, aquarium.getAquarium_name(), user.getId());
+			accessControl.givePermission(con, guestId, aquarium.getAquarium_id());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/loginPage.jsp");
-		rd.forward(request,response);
-		
+
 	}
 
 }
