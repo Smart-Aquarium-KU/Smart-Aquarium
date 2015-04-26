@@ -12,14 +12,23 @@
 	src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 </head>
 <body>
+
+<div data-role="header">
+<h2>Smart Aquarium</h2>
+</div>
+<div data-role="content" data-theme="b" >
+
+
+<br><br>
 	<form name="add" action="askFish" method="post">
 		Aquarium Name:<input type="text" name="aquariumName" /> </br>
 		Mac Address<input type="text" name="macAddress" /> </br>
 		Ip Address<input type="text" name="ipAddress" /></br>
-		<input type="submit" value="ADD" />
+		<input type="submit" data-theme="b"value="Add" />
 	</form>
 	<div data-role="footer" data-position="fixed" data-theme="d">
 		<h1>Kasetsart University Senior Project</h1>
+	</div>
 	</div>
 </body>
 </html>

@@ -22,13 +22,13 @@
 	<br>
 </div>
 <div data-role="content" data-theme="b">
+<p>25</p>
 
 
 
 
 <a href="#feed" data-rel="popup" data-role="button" data-transition="flow" data-theme="a"  >Feed Your Fish!</a>
-<a href="lamp.html"   data-role="button" data-theme="a" >Lamp Controller</a>
-<a href ="temperature.html" data-role="button" data-theme="a"  >Check Temperature</a>
+<a href ="#lamp" data-rel="popup" data-role="button" data-theme="a"  >Lamp Controller</a>
 <a href="watch.html" data-role="button"  data-theme="a" >Watch Live</a>
 <a href="hata.html" data-role="button" data-theme="b"   >Write Us</a>
 
@@ -44,6 +44,31 @@
         <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
         <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Feed</a>
     </div>
+</div>
+
+<div data-role="popup" id="lamp" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:600px;" class="ui-corner-all">
+    <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Lamp</h1>
+    </div>
+	<br><br>
+    <form>
+    <label for="flip-2"></label>
+    <center><select name="flip-2" id="flip-2" data-role="slider" data-track-theme="a" data-theme="a">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+	
+    </select>
+		</center>
+	<br>
+	<a href="main.html"  data-role="button" data-transition="flow" data-theme="b"  >Save! And Go Back Main Page</a>
+	<br>
+</form>
+	
+	
+	
+	
+	
+    
 </div>
 
 
