@@ -117,70 +117,70 @@
 </script>
 </head>
 <body>
-	Â  Â  Â 
+	     
 	<form method="post" name="registerForm" action="registerPage" onsubmit="return validateForm()">
-		Â  Â 
-		<table width="40%" Â bgcolor="#efee82" align="center">
+		   
+		<table width="40%"  bgcolor="#efee82" align="center">
 
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â  Â  Â  Â  Â 
+				                   
 				<td colspan=3><font size=3><center>
 							<b>REGISTRATION FORM</b>
-						</center></font> Â  Â  Â  Â  Â  Â 
+						</center></font>            
 			</tr>
 
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â 
-				<td width="30%">Login Name:<br /></td> Â  Â  Â  Â  Â  Â 
+				           
+				<td width="30%">Login Name:<br /></td>            
 				<td><input name="username" type="text" size=30 maxlength=30></td>
-				Â  Â  Â  Â 
+				       
 			</tr>
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â 
-				<td width="30%">Password:<br /></td> Â  Â  Â  Â  Â  Â 
+				           
+				<td width="30%">Password:<br /></td>            
 				<td><input name="userpass" type="password" size=30 maxlength=30></td>
-				Â  Â  Â  Â 
+				       
 			</tr>
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â 
-				<td width="30%">Confirm Password:<br /></td> Â  Â  Â  Â  Â  Â 
+				           
+				<td width="30%">Confirm Password:<br /></td>            
 				<td><input name="ruserpass" type="password" size=30
-					maxlength=30></td> Â  Â  Â  Â 
+					maxlength=30></td>        
 			</tr>
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â 
-				<td width="30%">Email :<br /></td> Â  Â  Â  Â  Â  Â 
+				           
+				<td width="30%">Email :<br /></td>            
 				<td><input name="email" type="text" size=30 maxlength=30></td>
-				Â  Â  Â  Â 
+				       
 			</tr>
-			Â  Â  Â  Â 
+			       
 			<tr>
-				Â  Â  Â  Â  Â  Â 
-				<td width="30" valign="middle">Gender:</td> Â  Â  Â  Â  Â  Â  Â 
-				<td><select name="gender" onChange="";> Â  Â  Â  Â  Â  Â  Â 
-						Â  Â 
-						<option selected="selected" value="">---Select---</option> Â  Â  Â  Â 
-						Â  Â  Â  Â  Â 
-						<option value="0">Female</option> Â  Â  Â  Â  Â  Â  Â  Â  Â 
-						<option value="1">Male</option> Â  Â  Â  Â  Â  Â  Â  Â 
-				</select></td> Â  Â  Â  Â  Â  Â 
+				           
+				<td width="30" valign="middle">Gender:</td>              
+				<td><select name="gender" onChange="";>              
+						   
+						<option selected="selected" value="">---Select---</option>        
+						         
+						<option value="0">Female</option>                  
+						<option value="1">Male</option>                
+				</select></td>            
 			</tr>
-			Â  Â  Â  Â  Â  Â  Â 
+			             
 			</tr>
-			Â  Â  Â  Â  Â  Â  Â  Â 
+			               
 			<tr>
-				Â  Â  Â  Â  Â 
-				<td><input type="submit" value="Submit"> Â  Â  Â  Â 
+				         
+				<td><input type="submit" value="Submit">        
 			</tr>
 
-			Â  Â 
+			   
 		</table>
-		Â  Â 
+		   
 	</form>
 <div data-role="footer" data-theme="d"><h5>Kasetsart University Senior Project </h5></div> 
 
