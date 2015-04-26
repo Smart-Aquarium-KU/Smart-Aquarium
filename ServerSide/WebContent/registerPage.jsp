@@ -174,13 +174,9 @@
 			</tr>
 			               
 			<tr>
-				         
 				<td><input type="submit" value="Submit">        
 			</tr>
-
-			   
-		</table>
-		   
+		</table>   
 	</form>
 <div data-role="footer" data-theme="d"><h5>Kasetsart University Senior Project </h5></div> 
 

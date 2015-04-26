@@ -82,9 +82,10 @@ public class UserPanelServlet extends HttpServlet {
 						"</head>"+
 						"<body>" +
 						"<div data-role=\"page\"  data-title=\"Smart Aquarium\">"+ 
-						"<div data-role=\"header\" data-theme=\"a\"><h1> </h1></div>"+ 
+						"<div data-role=\"header\" data-theme=\"a\"><h1>Smart Aquarium </h1></div>"+ 
 						"<div data-role=\"content\" data-theme=\"a\">"+
 						"<center><img src=\"pi.png\"></center> <br> </div>" +
+						"<center><h4>Welcome "+user.getUsername()+"</h4></center>"+
 						"<a href=\"#feed\" data-rel=\"popup\" data-role=\"button\" data-transition=\"flow\" data-theme=\"a\"  >Feed Your Fish!</a>" +
 						"<div data-role=\"popup\" id=\"feed\" data-overlay-theme=\"a\" data-theme=\"c\" data-dismissible=\"false\" style=\"max-width:400px;\" class=\"ui-corner-all\">" +
 						"<div data-role=\"header\" data-theme=\"a\" class=\"ui-corner-top\">" +
@@ -95,11 +96,7 @@ public class UserPanelServlet extends HttpServlet {
 						"<p>This action cannot be undone.</p>" +
 						"<a href=\"#\" data-role=\"button\" data-inline=\"true\" data-rel=\"back\" data-theme=\"c\">Cancel</a>" +
 						" <a href=\"#\" data-role=\"button\" data-inline=\"true\" data-rel=\"back\" data-transition=\"flow\" data-theme=\"b\">Feed</a>" +
-						"</div> </div>"+
-						"<div data-role=\"header\">"+
-						"<h2>Smart Aquarium</h2>"+
-						"</div>"+
-						"<center><h4>Welcome "+user.getUsername()+"</h4></center>"+
+						"</div> </div>"+	
 						"<form name=\"addAquarium\" action=\"askFish.html\" method=\"post\">"+
 						"<input type=\"submit\" value=\"ADD AQUARIUM\"/>  "+
 						"</form>"+
